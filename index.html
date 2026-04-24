@@ -106,6 +106,7 @@
   /* Week sections */
   .week-section { display: none; padding: 16px; }
   .week-section.active { display: block; }
+  .week-section:first-of-type { display: block; }
   .week-header {
     display: flex;
     align-items: center;
@@ -300,7 +301,7 @@
 <div class="nav" id="navTabs"></div>
 
 <!-- WEEK 0 -->
-<div class="week-section" data-week="0">
+<div class="week-section active" data-week="0">
   <div class="week-header">
     <span class="week-num">W0</span>
     <div><div class="week-title">Launch Week</div><div class="week-phase">Setup & Apply Now</div></div>
@@ -832,24 +833,26 @@ function saveState(state) {
 }
 
 function init() {
-  const state = loadState();
-  const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-  checkboxes.forEach(cb => {
-    const id = cb.dataset.id;
-    if (state[id]) { cb.checked = true; cb.closest('.todo').classList.add('done'); }
-    cb.addEventListener('change', function() {
-      const s = loadState();
-      s[this.dataset.id] = this.checked;
-      saveState(s);
-      this.closest('.todo').classList.toggle('done', this.checked);
-      updateProgress();
-      updateStats();
+  try {
+    const state = loadState();
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach(cb => {
+      const id = cb.dataset.id;
+      if (state[id]) { cb.checked = true; cb.closest('.todo').classList.add('done'); }
+      cb.addEventListener('change', function() {
+        const s = loadState();
+        s[this.dataset.id] = this.checked;
+        saveState(s);
+        this.closest('.todo').classList.toggle('done', this.checked);
+        updateProgress();
+        updateStats();
+      });
     });
-  });
-  buildNav();
-  updateProgress();
-  updateStats();
-  showWeek(loadState()._activeWeek || '0');
+    buildNav();
+    updateProgress();
+    updateStats();
+    showWeek(state._activeWeek || '0');
+  } catch(e) { console.error('Init error:', e); }
 }
 
 function buildNav() {
