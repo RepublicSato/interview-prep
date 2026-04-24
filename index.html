@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>12-Week Gameplan — Divyanshu</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --card: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #58a6ff;
+    --green: #3fb950;
+    --orange: #d29922;
+    --red: #f85149;
+    --purple: #bc8cff;
+    --check-bg: #21262d;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    padding: 0 0 80px 0;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Header */
+  .hero {
+    background: linear-gradient(135deg, #1a3a4a 0%, #1a1a3e 100%);
+    padding: 24px 16px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero h1 { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+  .hero .subtitle { font-size: 13px; color: var(--muted); }
+  .progress-bar {
+    margin-top: 12px;
+    background: var(--check-bg);
+    border-radius: 8px;
+    height: 8px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--green), var(--accent));
+    border-radius: 8px;
+    transition: width 0.4s ease;
+  }
+  .progress-text {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 4px;
+    text-align: right;
+  }
+
+  /* Nav tabs */
+  .nav {
+    display: flex;
+    overflow-x: auto;
+    gap: 6px;
+    padding: 12px 16px;
+    position: sticky;
+    top: 92px;
+    z-index: 99;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    flex-shrink: 0;
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .nav-btn.active {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+  .nav-btn .badge {
+    display: inline-block;
+    min-width: 18px;
+    padding: 0 5px;
+    margin-left: 4px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.15);
+    font-size: 11px;
+    text-align: center;
+  }
+
+  /* Week sections */
+  .week-section { display: none; padding: 16px; }
+  .week-section.active { display: block; }
+  .week-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .week-num {
+    background: var(--accent);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 12px;
+    white-space: nowrap;
+  }
+  .week-title { font-size: 16px; font-weight: 600; }
+  .week-phase {
+    font-size: 11px;
+    color: var(--purple);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* Category cards */
+  .category {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+  .cat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 14px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .cat-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .cat-icon { font-size: 16px; }
+  .cat-count {
+    font-size: 12px;
+    color: var(--muted);
+    background: var(--check-bg);
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+  .cat-body { padding: 0 14px 12px; }
+
+  /* Todo items */
+  .todo {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .todo:last-child { border-bottom: none; }
+  .todo input[type="checkbox"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    border: 2px solid var(--border);
+    border-radius: 6px;
+    background: var(--check-bg);
+    cursor: pointer;
+    margin-top: 1px;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .todo input[type="checkbox"]:checked {
+    background: var(--green);
+    border-color: var(--green);
+  }
+  .todo input[type="checkbox"]:checked::after {
+    content: '✓';
+    color: #fff;
+    position: absolute;
+    top: -1px;
+    left: 3px;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .todo-text { font-size: 14px; color: var(--text); flex: 1; }
+  .todo.done .todo-text {
+    text-decoration: line-through;
+    color: var(--muted);
+  }
+  .todo-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 1px 6px;
+    border-radius: 4px;
+    margin-left: 4px;
+    vertical-align: middle;
+  }
+  .tag-dsa { background: #1f3a5f; color: var(--accent); }
+  .tag-sd { background: #2d1f3f; color: var(--purple); }
+  .tag-beh { background: #3f2f1f; color: var(--orange); }
+  .tag-apply { background: #1f3f2f; color: var(--green); }
+  .tag-skill { background: #3f1f1f; color: var(--red); }
+  .tag-mock { background: #1f3f3f; color: #56d4dd; }
+
+  /* Resources */
+  .resource-link {
+    display: inline-block;
+    font-size: 12px;
+    color: var(--accent);
+    text-decoration: none;
+    margin-top: 4px;
+  }
+  .resource-link:hover { text-decoration: underline; }
+
+  /* Target companies */
+  .company-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .company-card {
+    background: var(--check-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 12px;
+  }
+  .company-card .name { font-weight: 600; font-size: 13px; margin-bottom: 2px; }
+  .company-card .comp { color: var(--green); font-weight: 600; }
+  .company-card .loc { color: var(--muted); }
+
+  /* Footer stats */
+  .footer-stats {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--card);
+    border-top: 1px solid var(--border);
+    padding: 10px 16px;
+    display: flex;
+    justify-content: space-around;
+    font-size: 12px;
+    z-index: 100;
+  }
+  .stat { text-align: center; }
+  .stat-num { font-size: 18px; font-weight: 700; color: var(--accent); }
+  .stat-label { color: var(--muted); }
+
+  /* Collapsible */
+  .cat-body.collapsed { display: none; }
+  .chevron { transition: transform 0.2s; font-size: 12px; color: var(--muted); }
+  .chevron.open { transform: rotate(90deg); }
+
+  /* Notes */
+  .note {
+    background: #1c2333;
+    border-left: 3px solid var(--accent);
+    padding: 10px 12px;
+    border-radius: 0 8px 8px 0;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+  .note strong { color: var(--text); }
+
+  @media (min-width: 600px) {
+    body { max-width: 600px; margin: 0 auto; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>🎯 12-Week Gameplan</h1>
+  <div class="subtitle">Target: ₹1Cr+ roles • DSA + System Design + Applications</div>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width: 0%"></div></div>
+  <div class="progress-text" id="progressText">0 / 0 completed</div>
+</div>
+
+<div class="nav" id="navTabs"></div>
+
+<!-- WEEK 0 -->
+<div class="week-section" data-week="0">
+  <div class="week-header">
+    <span class="week-num">W0</span>
+    <div><div class="week-title">Launch Week</div><div class="week-phase">Setup & Apply Now</div></div>
+  </div>
+  <div class="note"><strong>Strategy:</strong> Don't wait 12 weeks to apply. You have 9 roles scoring 4.0+ with PDFs ready. Apply NOW while prepping. Interview pipelines take 4-8 weeks.</div>
+
+  <div class="category">
+    <div class="cat-header" onclick="toggleCat(this)"><span class="cat-label"><span class="cat-icon">📋</span> Setup</span><span class="chevron open">▶</span></div>
+    <div class="cat-body">
+      <div class="todo"><input type="checkbox" data-id="w0-1"><span class="todo-text">Create NeetCode account, bookmark NeetCode 150 list <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w0-2"><span class="todo-text">Download System Design Primer (GitHub) <span class="todo-tag tag-sd">SD</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w0-3"><span class="todo-text">Get Grokking the System Design Interview access <span class="todo-tag tag-sd">SD</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w0-4"><span class="todo-text">Set up Pramp account for mock interviews <span class="todo-tag tag-mock">MOCK</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w0-5"><span class="todo-text">Run CV through ResumeWorded ATS check <span class="todo-tag tag-apply">APPLY</span></span></div>
+    </div>
+  </div>
+
+  <div class="category">
+    <div class="cat-header" onclick="toggleCat(this)"><span class="cat-label"><span class="cat-icon">🚀</span> Apply (5 Ready Roles)</span><span class="chevron open">▶</span></div>
+    <div class="cat-body">
+      <div class="todo"><input type="checkbox" data-id="w0-6"><span class="todo-text">Apply: GetGround — Senior Full Stack (4.3/5) <span class="todo-tag tag-apply">APPLY</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w0-7"><span class="todo-text">Apply: Scope AI — Software Engineer (4.0/5) <span class="todo-tag tag-apply">APPLY</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w0-8"><span class="todo-text">Apply: MongoDB — SWE 3 AI Platform (4.3/5) <span class="todo-tag tag-apply">APPLY</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w0-9"><span class="todo-text">Apply: InCommon/Podifi — Backend Go (4.3/5) <span class="todo-tag tag-apply">APPLY</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w0-10"><span class="todo-text">Apply: SentinelOne — SWE Observo AI (4.2/5) <span class="todo-tag tag-apply">APPLY</span></span></div>
+    </div>
+  </div>
+
+  <div class="category">
+    <div class="cat-header" onclick="toggleCat(this)"><span class="cat-label"><span class="cat-icon">📝</span> Document Projects</span><span class="chevron open">▶</span></div>
+    <div class="cat-body">
+      <div class="todo"><input type="checkbox" data-id="w0-11"><span class="todo-text">Write STAR doc: URL Shortener (scale, decisions, failures, tradeoffs) <span class="todo-tag tag-beh">BEH</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w0-12"><span class="todo-text">Write STAR doc: Spectra React Library (cross-team impact) <span class="todo-tag tag-beh">BEH</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w0-13"><span class="todo-text">Write STAR doc: AI Cost Optimization Engine <span class="todo-tag tag-beh">BEH</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w0-14"><span class="todo-text">Write STAR doc: SQL Optimization (9,650x speedup) <span class="todo-tag tag-beh">BEH</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w0-15"><span class="todo-text">Update GitHub README for AI Cost Optimization repo <span class="todo-tag tag-apply">APPLY</span></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- WEEK 1 -->
+<div class="week-section" data-week="1">
+  <div class="week-header">
+    <span class="week-num">W1</span>
+    <div><div class="week-title">Arrays, Strings, Hashing</div><div class="week-phase">Phase 1: Foundations</div></div>
+  </div>
+  <div class="category">
+    <div class="cat-header" onclick="toggleCat(this)"><span class="cat-label"><span class="cat-icon">💻</span> DSA — 20 Problems</span><span class="chevron open">▶</span></div>
+    <div class="cat-body">
+      <div class="todo"><input type="checkbox" data-id="w1-1"><span class="todo-text">Two Sum <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w1-2"><span class="todo-text">Valid Anagram <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w1-3"><span class="todo-text">Contains Duplicate <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w1-4"><span class="todo-text">Group Anagrams <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w1-5"><span class="todo-text">Top K Frequent Elements <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w1-6"><span class="todo-text">Product of Array Except Self <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w1-7"><span class="todo-text">Valid Sudoku <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w1-8"><span class="todo-text">Encode and Decode Strings <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w1-9"><span class="todo-text">Longest Consecutive Sequence <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w1-10"><span class="todo-text">Longest Substring Without Repeating <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w1-11"><span class="todo-text">Best Time to Buy and Sell Stock <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w1-12"><span class="todo-text">3Sum <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w1-13"><span class="todo-text">Container With Most Water <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w1-14"><span class="todo-text">Trapping Rain Water <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w1-15"><span class="todo-text">Maximum Subarray (Kadane's) <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w1-16"><span class="todo-text">Minimum Window Substring <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w1-17"><span class="todo-text">Sliding Window Maximum <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w1-18"><span class="todo-text">Permutation in String <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w1-19"><span class="todo-text">Longest Repeating Character Replacement <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w1-20"><span class="todo-text">Valid Palindrome <span class="todo-tag tag-dsa">DSA</span></span></div>
+    </div>
+  </div>
+  <div class="category">
+    <div class="cat-header" onclick="toggleCat(this)"><span class="cat-label"><span class="cat-icon">🏗️</span> System Design</span><span class="chevron open">▶</span></div>
+    <div class="cat-body">
+      <div class="todo"><input type="checkbox" data-id="w1-21"><span class="todo-text">Design: URL Shortener — capacity estimation <span class="todo-tag tag-sd">SD</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w1-22"><span class="todo-text">Design: URL Shortener — database schema + API <span class="todo-tag tag-sd">SD</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w1-23"><span class="todo-text">Design: URL Shortener — caching + scaling deep dive <span class="todo-tag tag-sd">SD</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w1-24"><span class="todo-text">Write formal design doc for your URL shortener project <span class="todo-tag tag-sd">SD</span></span></div>
+    </div>
+  </div>
+  <div class="category">
+    <div class="cat-header" onclick="toggleCat(this)"><span class="cat-label"><span class="cat-icon">🎯</span> Behavioral</span><span class="chevron open">▶</span></div>
+    <div class="cat-body">
+      <div class="todo"><input type="checkbox" data-id="w1-25"><span class="todo-text">Polish STAR story: Spectra library cross-team adoption <span class="todo-tag tag-beh">BEH</span></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- WEEK 2 -->
+<div class="week-section" data-week="2">
+  <div class="week-header">
+    <span class="week-num">W2</span>
+    <div><div class="week-title">Stacks, Queues, Linked Lists</div><div class="week-phase">Phase 1: Foundations</div></div>
+  </div>
+  <div class="category">
+    <div class="cat-header" onclick="toggleCat(this)"><span class="cat-label"><span class="cat-icon">💻</span> DSA — 20 Problems</span><span class="chevron open">▶</span></div>
+    <div class="cat-body">
+      <div class="todo"><input type="checkbox" data-id="w2-1"><span class="todo-text">Valid Parentheses <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w2-2"><span class="todo-text">Min Stack <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w2-3"><span class="todo-text">Evaluate Reverse Polish Notation <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w2-4"><span class="todo-text">Daily Temperatures <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w2-5"><span class="todo-text">Car Fleet <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w2-6"><span class="todo-text">Largest Rectangle in Histogram <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w2-7"><span class="todo-text">Reverse Linked List <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w2-8"><span class="todo-text">Merge Two Sorted Lists <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w2-9"><span class="todo-text">Reorder List <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w2-10"><span class="todo-text">Remove Nth Node From End <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w2-11"><span class="todo-text">Copy List with Random Pointer <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w2-12"><span class="todo-text">Add Two Numbers <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w2-13"><span class="todo-text">Linked List Cycle <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w2-14"><span class="todo-text">Find the Duplicate Number <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w2-15"><span class="todo-text">LRU Cache <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w2-16"><span class="todo-text">Merge K Sorted Lists <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w2-17"><span class="todo-text">Reverse Nodes in K-Group <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w2-18"><span class="todo-text">Implement Queue using Stacks <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w2-19"><span class="todo-text">Design Circular Queue <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w2-20"><span class="todo-text">Asteroid Collision <span class="todo-tag tag-dsa">DSA</span></span></div>
+    </div>
+  </div>
+  <div class="category">
+    <div class="cat-header" onclick="toggleCat(this)"><span class="cat-label"><span class="cat-icon">🏗️</span> System Design</span><span class="chevron open">▶</span></div>
+    <div class="cat-body">
+      <div class="todo"><input type="checkbox" data-id="w2-21"><span class="todo-text">Design: Notification System — push, email, SMS channels <span class="todo-tag tag-sd">SD</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w2-22"><span class="todo-text">Design: Notification System — fan-out, delivery guarantees <span class="todo-tag tag-sd">SD</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w2-23"><span class="todo-text">Design: Notification System — message queues + retry logic <span class="todo-tag tag-sd">SD</span></span></div>
+    </div>
+  </div>
+  <div class="category">
+    <div class="cat-header" onclick="toggleCat(this)"><span class="cat-label"><span class="cat-icon">🔧</span> Skill Gaps</span><span class="chevron open">▶</span></div>
+    <div class="cat-body">
+      <div class="todo"><input type="checkbox" data-id="w2-24"><span class="todo-text">Kafka fundamentals — Confluent free course (4 hrs) <span class="todo-tag tag-skill">SKILL</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w2-25"><span class="todo-text">Write STAR story: SQL optimization 9,650x speedup <span class="todo-tag tag-beh">BEH</span></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- WEEK 3 -->
+<div class="week-section" data-week="3">
+  <div class="week-header">
+    <span class="week-num">W3</span>
+    <div><div class="week-title">Trees & Graphs</div><div class="week-phase">Phase 1: Foundations</div></div>
+  </div>
+  <div class="category">
+    <div class="cat-header" onclick="toggleCat(this)"><span class="cat-label"><span class="cat-icon">💻</span> DSA — 20 Problems</span><span class="chevron open">▶</span></div>
+    <div class="cat-body">
+      <div class="todo"><input type="checkbox" data-id="w3-1"><span class="todo-text">Invert Binary Tree <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w3-2"><span class="todo-text">Maximum Depth of Binary Tree <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w3-3"><span class="todo-text">Same Tree <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w3-4"><span class="todo-text">Subtree of Another Tree <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w3-5"><span class="todo-text">Lowest Common Ancestor of BST <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w3-6"><span class="todo-text">Binary Tree Level Order Traversal <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w3-7"><span class="todo-text">Validate Binary Search Tree <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w3-8"><span class="todo-text">Kth Smallest Element in BST <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w3-9"><span class="todo-text">Construct Binary Tree from Preorder/Inorder <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w3-10"><span class="todo-text">Binary Tree Maximum Path Sum <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w3-11"><span class="todo-text">Serialize and Deserialize Binary Tree <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w3-12"><span class="todo-text">Number of Islands <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w3-13"><span class="todo-text">Clone Graph <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w3-14"><span class="todo-text">Pacific Atlantic Water Flow <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w3-15"><span class="todo-text">Course Schedule (topological sort) <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w3-16"><span class="todo-text">Course Schedule II <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w3-17"><span class="todo-text">Graph Valid Tree <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w3-18"><span class="todo-text">Number of Connected Components <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w3-19"><span class="todo-text">Word Ladder <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w3-20"><span class="todo-text">Surrounded Regions <span class="todo-tag tag-dsa">DSA</span></span></div>
+    </div>
+  </div>
+  <div class="category">
+    <div class="cat-header" onclick="toggleCat(this)"><span class="cat-label"><span class="cat-icon">🏗️</span> System Design</span><span class="chevron open">▶</span></div>
+    <div class="cat-body">
+      <div class="todo"><input type="checkbox" data-id="w3-21"><span class="todo-text">Design: News Feed — fan-out-on-write vs fan-out-on-read <span class="todo-tag tag-sd">SD</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w3-22"><span class="todo-text">Design: News Feed — caching, ranking, pagination <span class="todo-tag tag-sd">SD</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w3-23"><span class="todo-text">Write STAR story: AI Cost Optimization Engine <span class="todo-tag tag-beh">BEH</span></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- WEEK 4 -->
+<div class="week-section" data-week="4">
+  <div class="week-header">
+    <span class="week-num">W4</span>
+    <div><div class="week-title">Binary Search, Heap, Greedy</div><div class="week-phase">Phase 1: Foundations</div></div>
+  </div>
+  <div class="category">
+    <div class="cat-header" onclick="toggleCat(this)"><span class="cat-label"><span class="cat-icon">💻</span> DSA — 20 Problems</span><span class="chevron open">▶</span></div>
+    <div class="cat-body">
+      <div class="todo"><input type="checkbox" data-id="w4-1"><span class="todo-text">Binary Search <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w4-2"><span class="todo-text">Search a 2D Matrix <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w4-3"><span class="todo-text">Koko Eating Bananas <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w4-4"><span class="todo-text">Search in Rotated Sorted Array <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w4-5"><span class="todo-text">Find Minimum in Rotated Sorted Array <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w4-6"><span class="todo-text">Time Based Key-Value Store <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w4-7"><span class="todo-text">Median of Two Sorted Arrays <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w4-8"><span class="todo-text">Kth Largest Element in Array <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w4-9"><span class="todo-text">Task Scheduler <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w4-10"><span class="todo-text">Design Twitter (Heap) <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w4-11"><span class="todo-text">Find Median from Data Stream <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w4-12"><span class="todo-text">Merge Intervals <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w4-13"><span class="todo-text">Insert Interval <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w4-14"><span class="todo-text">Non-overlapping Intervals <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w4-15"><span class="todo-text">Meeting Rooms <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w4-16"><span class="todo-text">Meeting Rooms II <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w4-17"><span class="todo-text">Maximum Profit in Job Scheduling <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w4-18"><span class="todo-text">Jump Game <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w4-19"><span class="todo-text">Jump Game II <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w4-20"><span class="todo-text">Gas Station <span class="todo-tag tag-dsa">DSA</span></span></div>
+    </div>
+  </div>
+  <div class="category">
+    <div class="cat-header" onclick="toggleCat(this)"><span class="cat-label"><span class="cat-icon">🏗️</span> System Design</span><span class="chevron open">▶</span></div>
+    <div class="cat-body">
+      <div class="todo"><input type="checkbox" data-id="w4-21"><span class="todo-text">Design: Payment System — idempotency, Saga pattern <span class="todo-tag tag-sd">SD</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w4-22"><span class="todo-text">Design: Payment System — reconciliation, failure modes <span class="todo-tag tag-sd">SD</span></span></div>
+    </div>
+  </div>
+  <div class="category">
+    <div class="cat-header" onclick="toggleCat(this)"><span class="cat-label"><span class="cat-icon">🚀</span> Apply — Tier 2</span><span class="chevron open">▶</span></div>
+    <div class="cat-body">
+      <div class="todo"><input type="checkbox" data-id="w4-23"><span class="todo-text">Apply: Grafana Labs — Backend Engineer (Go) <span class="todo-tag tag-apply">APPLY</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w4-24"><span class="todo-text">Apply: Monzo — Backend Engineer (Go) <span class="todo-tag tag-apply">APPLY</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w4-25"><span class="todo-text">Apply: Rubrik — SWE (Go/Distributed) <span class="todo-tag tag-apply">APPLY</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w4-26"><span class="todo-text">Apply: CrowdStrike — Cloud Engineer (Go) <span class="todo-tag tag-apply">APPLY</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w4-27"><span class="todo-text">Write STAR story: Localization infra (10+ locales) <span class="todo-tag tag-beh">BEH</span></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- WEEK 5 -->
+<div class="week-section" data-week="5">
+  <div class="week-header">
+    <span class="week-num">W5</span>
+    <div><div class="week-title">Dynamic Programming (Part 1)</div><div class="week-phase">Phase 2: Depth</div></div>
+  </div>
+  <div class="category">
+    <div class="cat-header" onclick="toggleCat(this)"><span class="cat-label"><span class="cat-icon">💻</span> DSA — 15 Problems</span><span class="chevron open">▶</span></div>
+    <div class="cat-body">
+      <div class="todo"><input type="checkbox" data-id="w5-1"><span class="todo-text">Climbing Stairs <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w5-2"><span class="todo-text">House Robber <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w5-3"><span class="todo-text">House Robber II <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w5-4"><span class="todo-text">Longest Palindromic Substring <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w5-5"><span class="todo-text">Palindromic Substrings <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w5-6"><span class="todo-text">Decode Ways <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w5-7"><span class="todo-text">Coin Change <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w5-8"><span class="todo-text">Maximum Product Subarray <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w5-9"><span class="todo-text">Word Break <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w5-10"><span class="todo-text">Longest Increasing Subsequence <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w5-11"><span class="todo-text">Partition Equal Subset Sum <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w5-12"><span class="todo-text">Unique Paths <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w5-13"><span class="todo-text">Min Cost Climbing Stairs <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w5-14"><span class="todo-text">Target Sum <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w5-15"><span class="todo-text">Interleaving String <span class="todo-tag tag-dsa">DSA</span></span></div>
+    </div>
+  </div>
+  <div class="category">
+    <div class="cat-header" onclick="toggleCat(this)"><span class="cat-label"><span class="cat-icon">🏗️</span> System Design</span><span class="chevron open">▶</span></div>
+    <div class="cat-body">
+      <div class="todo"><input type="checkbox" data-id="w5-16"><span class="todo-text">Design: Search / Autocomplete — trie, inverted index <span class="todo-tag tag-sd">SD</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w5-17"><span class="todo-text">Design: Search — Elasticsearch, ranking, relevance <span class="todo-tag tag-sd">SD</span></span></div>
+    </div>
+  </div>
+  <div class="category">
+    <div class="cat-header" onclick="toggleCat(this)"><span class="cat-label"><span class="cat-icon">🔧</span> Skill Gaps</span><span class="chevron open">▶</span></div>
+    <div class="cat-body">
+      <div class="todo"><input type="checkbox" data-id="w5-18"><span class="todo-text">Kubernetes basics — pods, services, deployments (6 hrs) <span class="todo-tag tag-skill">SKILL</span></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- WEEK 6 -->
+<div class="week-section" data-week="6">
+  <div class="week-header">
+    <span class="week-num">W6</span>
+    <div><div class="week-title">DP (Part 2) + Backtracking</div><div class="week-phase">Phase 2: Depth</div></div>
+  </div>
+  <div class="category">
+    <div class="cat-header" onclick="toggleCat(this)"><span class="cat-label"><span class="cat-icon">💻</span> DSA — 15 Problems</span><span class="chevron open">▶</span></div>
+    <div class="cat-body">
+      <div class="todo"><input type="checkbox" data-id="w6-1"><span class="todo-text">Longest Common Subsequence <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w6-2"><span class="todo-text">Edit Distance <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w6-3"><span class="todo-text">Distinct Subsequences <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w6-4"><span class="todo-text">Best Time to Buy Sell Stock with Cooldown <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w6-5"><span class="todo-text">Regular Expression Matching <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w6-6"><span class="todo-text">Burst Balloons <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w6-7"><span class="todo-text">Combination Sum <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w6-8"><span class="todo-text">Combination Sum II <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w6-9"><span class="todo-text">Permutations <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w6-10"><span class="todo-text">Subsets <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w6-11"><span class="todo-text">Subsets II <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w6-12"><span class="todo-text">Word Search <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w6-13"><span class="todo-text">Palindrome Partitioning <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w6-14"><span class="todo-text">Letter Combinations of Phone Number <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w6-15"><span class="todo-text">N-Queens <span class="todo-tag tag-dsa">DSA</span></span></div>
+    </div>
+  </div>
+  <div class="category">
+    <div class="cat-header" onclick="toggleCat(this)"><span class="cat-label"><span class="cat-icon">🏗️</span> System Design + Mocks</span><span class="chevron open">▶</span></div>
+    <div class="cat-body">
+      <div class="todo"><input type="checkbox" data-id="w6-16"><span class="todo-text">Design: Chat System / WhatsApp — WebSocket, presence <span class="todo-tag tag-sd">SD</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w6-17"><span class="todo-text">Design: Chat System — message storage, E2E encryption <span class="todo-tag tag-sd">SD</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w6-18"><span class="todo-text">🎤 Mock Interview #1 — Pramp (DSA focus) <span class="todo-tag tag-mock">MOCK</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w6-19"><span class="todo-text">🎤 Mock Interview #2 — Pramp (System Design) <span class="todo-tag tag-mock">MOCK</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w6-20"><span class="todo-text">Debrief: Write down #1 gap from each mock <span class="todo-tag tag-mock">MOCK</span></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- WEEK 7 -->
+<div class="week-section" data-week="7">
+  <div class="week-header">
+    <span class="week-num">W7</span>
+    <div><div class="week-title">Advanced Graphs + Tries</div><div class="week-phase">Phase 2: Depth</div></div>
+  </div>
+  <div class="category">
+    <div class="cat-header" onclick="toggleCat(this)"><span class="cat-label"><span class="cat-icon">💻</span> DSA — 15 Problems</span><span class="chevron open">▶</span></div>
+    <div class="cat-body">
+      <div class="todo"><input type="checkbox" data-id="w7-1"><span class="todo-text">Min Cost to Connect All Points (Prim/Kruskal) <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w7-2"><span class="todo-text">Network Delay Time (Dijkstra's) <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w7-3"><span class="todo-text">Cheapest Flights Within K Stops <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w7-4"><span class="todo-text">Swim in Rising Water <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w7-5"><span class="todo-text">Alien Dictionary <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w7-6"><span class="todo-text">Redundant Connection <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w7-7"><span class="todo-text">Accounts Merge (Union-Find) <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w7-8"><span class="todo-text">Implement Trie <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w7-9"><span class="todo-text">Design Add and Search Words <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w7-10"><span class="todo-text">Word Search II (Trie + Backtracking) <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w7-11"><span class="todo-text">Reconstruct Itinerary <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w7-12"><span class="todo-text">Longest Path With Different Adjacent Characters <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w7-13"><span class="todo-text">Rotting Oranges <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w7-14"><span class="todo-text">Walls and Gates <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w7-15"><span class="todo-text">01 Matrix <span class="todo-tag tag-dsa">DSA</span></span></div>
+    </div>
+  </div>
+  <div class="category">
+    <div class="cat-header" onclick="toggleCat(this)"><span class="cat-label"><span class="cat-icon">🏗️</span> System Design + Skills</span><span class="chevron open">▶</span></div>
+    <div class="cat-body">
+      <div class="todo"><input type="checkbox" data-id="w7-16"><span class="todo-text">Design: Rate Limiter + API Gateway <span class="todo-tag tag-sd">SD</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w7-17"><span class="todo-text">Design: Rate Limiter — token bucket, sliding window, distributed <span class="todo-tag tag-sd">SD</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w7-18"><span class="todo-text">🎤 Mock Interview #3 — Interviewing.io (SD focus) <span class="todo-tag tag-mock">MOCK</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w7-19"><span class="todo-text">Java basics crash course — enough for interviews (8 hrs) <span class="todo-tag tag-skill">SKILL</span></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- WEEK 8 -->
+<div class="week-section" data-week="8">
+  <div class="week-header">
+    <span class="week-num">W8</span>
+    <div><div class="week-title">Low-Level Design + Machine Coding</div><div class="week-phase">Phase 2: Depth</div></div>
+  </div>
+  <div class="category">
+    <div class="cat-header" onclick="toggleCat(this)"><span class="cat-label"><span class="cat-icon">🔧</span> LLD — 4 Problems</span><span class="chevron open">▶</span></div>
+    <div class="cat-body">
+      <div class="todo"><input type="checkbox" data-id="w8-1"><span class="todo-text">LLD: Parking Lot (OOP + SOLID) <span class="todo-tag tag-sd">SD</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w8-2"><span class="todo-text">LLD: Elevator System <span class="todo-tag tag-sd">SD</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w8-3"><span class="todo-text">LLD: BookMyShow / Movie Booking <span class="todo-tag tag-sd">SD</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w8-4"><span class="todo-text">LLD: Splitwise / Expense Sharing <span class="todo-tag tag-sd">SD</span></span></div>
+    </div>
+  </div>
+  <div class="category">
+    <div class="cat-header" onclick="toggleCat(this)"><span class="cat-label"><span class="cat-icon">🏗️</span> System Design</span><span class="chevron open">▶</span></div>
+    <div class="cat-body">
+      <div class="todo"><input type="checkbox" data-id="w8-5"><span class="todo-text">Design: Distributed Cache — consistent hashing, replication <span class="todo-tag tag-sd">SD</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w8-6"><span class="todo-text">Design: Distributed Cache — eviction policies, write-through vs write-back <span class="todo-tag tag-sd">SD</span></span></div>
+    </div>
+  </div>
+  <div class="category">
+    <div class="cat-header" onclick="toggleCat(this)"><span class="cat-label"><span class="cat-icon">🚀</span> Apply — Tier 1 FAANG</span><span class="chevron open">▶</span></div>
+    <div class="cat-body">
+      <div class="todo"><input type="checkbox" data-id="w8-7"><span class="todo-text">Apply: Google — SWE L4 (Bangalore) <span class="todo-tag tag-apply">APPLY</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w8-8"><span class="todo-text">Apply: Uber — SWE II Backend (Bangalore) <span class="todo-tag tag-apply">APPLY</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w8-9"><span class="todo-text">Apply: Stripe — Backend Engineer <span class="todo-tag tag-apply">APPLY</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w8-10"><span class="todo-text">Apply: Cloudflare — Systems Engineer <span class="todo-tag tag-apply">APPLY</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w8-11"><span class="todo-text">Apply: Atlassian — SDE-II (Bangalore) <span class="todo-tag tag-apply">APPLY</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w8-12"><span class="todo-text">🎤 Mock Interview #4 — Interviewing.io (Full loop) <span class="todo-tag tag-mock">MOCK</span></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- WEEK 9 -->
+<div class="week-section" data-week="9">
+  <div class="week-header">
+    <span class="week-num">W9</span>
+    <div><div class="week-title">System Design Deep Dives</div><div class="week-phase">Phase 3: Peak</div></div>
+  </div>
+  <div class="category">
+    <div class="cat-header" onclick="toggleCat(this)"><span class="cat-label"><span class="cat-icon">🏗️</span> SD — Revisit + New</span><span class="chevron open">▶</span></div>
+    <div class="cat-body">
+      <div class="todo"><input type="checkbox" data-id="w9-1"><span class="todo-text">Revisit all 8 designs — add capacity estimation to each <span class="todo-tag tag-sd">SD</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w9-2"><span class="todo-text">Record yourself: explain each design in 5 mins <span class="todo-tag tag-sd">SD</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w9-3"><span class="todo-text">Design: Twitter / X — full end-to-end <span class="todo-tag tag-sd">SD</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w9-4"><span class="todo-text">Design: Uber / Ride-sharing — geo-spatial, matching <span class="todo-tag tag-sd">SD</span></span></div>
+    </div>
+  </div>
+  <div class="category">
+    <div class="cat-header" onclick="toggleCat(this)"><span class="cat-label"><span class="cat-icon">🎤</span> Behavioral</span><span class="chevron open">▶</span></div>
+    <div class="cat-body">
+      <div class="todo"><input type="checkbox" data-id="w9-5"><span class="todo-text">🎤 Mock Interview #5 — Full behavioral round <span class="todo-tag tag-mock">MOCK</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w9-6"><span class="todo-text">Polish all 5 STAR stories — each under 3 minutes <span class="todo-tag tag-beh">BEH</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w9-7"><span class="todo-text">Prepare "Why this company?" answers for each active pipeline <span class="todo-tag tag-beh">BEH</span></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- WEEK 10 -->
+<div class="week-section" data-week="10">
+  <div class="week-header">
+    <span class="week-num">W10</span>
+    <div><div class="week-title">Weak Patterns + Contests</div><div class="week-phase">Phase 3: Peak</div></div>
+  </div>
+  <div class="category">
+    <div class="cat-header" onclick="toggleCat(this)"><span class="cat-label"><span class="cat-icon">💻</span> DSA — Revision</span><span class="chevron open">▶</span></div>
+    <div class="cat-body">
+      <div class="todo"><input type="checkbox" data-id="w10-1"><span class="todo-text">Revisit 10 problems from weakest pattern (likely DP) <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w10-2"><span class="todo-text">Revisit 10 problems from second-weakest pattern <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w10-3"><span class="todo-text">LeetCode Weekly Contest #1 (timed) <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w10-4"><span class="todo-text">LeetCode Weekly Contest #2 (timed) <span class="todo-tag tag-dsa">DSA</span></span></div>
+    </div>
+  </div>
+  <div class="category">
+    <div class="cat-header" onclick="toggleCat(this)"><span class="cat-label"><span class="cat-icon">🎤</span> Mocks</span><span class="chevron open">▶</span></div>
+    <div class="cat-body">
+      <div class="todo"><input type="checkbox" data-id="w10-5"><span class="todo-text">🎤 Mock Interview #6 — Full loop (DSA + SD + Behavioral) <span class="todo-tag tag-mock">MOCK</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w10-6"><span class="todo-text">🎤 Mock Interview #7 — Weakest area from #6 debrief <span class="todo-tag tag-mock">MOCK</span></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- WEEK 11 -->
+<div class="week-section" data-week="11">
+  <div class="week-header">
+    <span class="week-num">W11</span>
+    <div><div class="week-title">Company-Specific Prep</div><div class="week-phase">Phase 3: Peak</div></div>
+  </div>
+  <div class="category">
+    <div class="cat-header" onclick="toggleCat(this)"><span class="cat-label"><span class="cat-icon">🎯</span> Targeted Prep</span><span class="chevron open">▶</span></div>
+    <div class="cat-body">
+      <div class="todo"><input type="checkbox" data-id="w11-1"><span class="todo-text">Read engineering blogs of companies in active pipeline <span class="todo-tag tag-apply">APPLY</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w11-2"><span class="todo-text">Practice company-specific system design (e.g. "Design Razorpay payments") <span class="todo-tag tag-sd">SD</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w11-3"><span class="todo-text">Review Glassdoor/Blind for recent interview questions <span class="todo-tag tag-apply">APPLY</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w11-4"><span class="todo-text">🎤 Mock Interview #8 — Company-specific simulation <span class="todo-tag tag-mock">MOCK</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w11-5"><span class="todo-text">Final behavioral polish — 6 STAR stories, each under 3 min <span class="todo-tag tag-beh">BEH</span></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- WEEK 12 -->
+<div class="week-section" data-week="12">
+  <div class="week-header">
+    <span class="week-num">W12</span>
+    <div><div class="week-title">Final Polish + Peak</div><div class="week-phase">Phase 3: Peak</div></div>
+  </div>
+  <div class="category">
+    <div class="cat-header" onclick="toggleCat(this)"><span class="cat-label"><span class="cat-icon">🏆</span> Final Week</span><span class="chevron open">▶</span></div>
+    <div class="cat-body">
+      <div class="todo"><input type="checkbox" data-id="w12-1"><span class="todo-text">Light DSA review — 10 favorite problems only <span class="todo-tag tag-dsa">DSA</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w12-2"><span class="todo-text">System design speed runs — explain any design in 25 mins <span class="todo-tag tag-sd">SD</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w12-3"><span class="todo-text">🎤 Mock Interview #9 — Final dress rehearsal <span class="todo-tag tag-mock">MOCK</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w12-4"><span class="todo-text">Rest day before major interview <span class="todo-tag tag-beh">BEH</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w12-5"><span class="todo-text">Follow up on all pending applications <span class="todo-tag tag-apply">APPLY</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="w12-6"><span class="todo-text">Ensure passport, visa docs, interview timezones ready <span class="todo-tag tag-apply">APPLY</span></span></div>
+    </div>
+  </div>
+  <div class="note"><strong>You made it.</strong> By now you've solved 160+ problems, designed 10+ systems, done 9 mock interviews, and applied to 20+ roles. Trust the prep.</div>
+</div>
+
+<!-- Target Companies Tab -->
+<div class="week-section" data-week="companies">
+  <div class="week-header">
+    <span class="week-num" style="background: var(--green);">🏢</span>
+    <div><div class="week-title">Target Companies (30)</div><div class="week-phase">₹1Cr+ • Visa Sponsorship • Remote</div></div>
+  </div>
+  <div class="note"><strong>Tier 1:</strong> Direct stack match — apply immediately</div>
+  <div class="company-grid">
+    <div class="company-card"><div class="name">Google</div><div class="comp">₹80L-1.5Cr</div><div class="loc">Bangalore • L4</div></div>
+    <div class="company-card"><div class="name">Amazon</div><div class="comp">₹50-80L+RSU</div><div class="loc">Chennai • SDE-II</div></div>
+    <div class="company-card"><div class="name">Microsoft</div><div class="comp">₹60L-1Cr</div><div class="loc">Bangalore • SDE-II</div></div>
+    <div class="company-card"><div class="name">Uber</div><div class="comp">₹70L-1.2Cr</div><div class="loc">Bangalore • SWE II</div></div>
+    <div class="company-card"><div class="name">Stripe</div><div class="comp">₹80L-1.3Cr</div><div class="loc">Bangalore/SG</div></div>
+    <div class="company-card"><div class="name">Razorpay</div><div class="comp">₹40-70L+ESOP</div><div class="loc">Bangalore • Go</div></div>
+    <div class="company-card"><div class="name">Flipkart</div><div class="comp">₹45-80L+ESOP</div><div class="loc">Bangalore</div></div>
+    <div class="company-card"><div class="name">MongoDB</div><div class="comp">₹50-80L</div><div class="loc">Gurugram • 4.3/5</div></div>
+    <div class="company-card"><div class="name">Supabase</div><div class="comp">$130-160K</div><div class="loc">Remote • Go</div></div>
+    <div class="company-card"><div class="name">Cloudflare</div><div class="comp">$130-180K</div><div class="loc">SG/London</div></div>
+  </div>
+  <div class="note" style="margin-top: 12px;"><strong>Tier 2:</strong> Stack-adjacent — need 1-2 skills to add</div>
+  <div class="company-grid">
+    <div class="company-card"><div class="name">Grafana Labs</div><div class="comp">$130-170K</div><div class="loc">Remote • Go</div></div>
+    <div class="company-card"><div class="name">HashiCorp</div><div class="comp">$120-160K</div><div class="loc">Remote • Go</div></div>
+    <div class="company-card"><div class="name">CrowdStrike</div><div class="comp">₹50-80L</div><div class="loc">Pune • Go</div></div>
+    <div class="company-card"><div class="name">Datadog</div><div class="comp">$130-180K</div><div class="loc">Singapore/NY</div></div>
+    <div class="company-card"><div class="name">Confluent</div><div class="comp">₹60-90L</div><div class="loc">Bangalore</div></div>
+    <div class="company-card"><div class="name">Databricks</div><div class="comp">€90-130K</div><div class="loc">Amsterdam/BLR</div></div>
+    <div class="company-card"><div class="name">Monzo</div><div class="comp">£80-110K</div><div class="loc">London • Go</div></div>
+    <div class="company-card"><div class="name">Rubrik</div><div class="comp">₹80L-1.2Cr</div><div class="loc">Bangalore • Go</div></div>
+    <div class="company-card"><div class="name">Deliveroo</div><div class="comp">£75-100K</div><div class="loc">London/HYD</div></div>
+    <div class="company-card"><div class="name">Wise</div><div class="comp">£80-110K</div><div class="loc">London/Tallinn</div></div>
+  </div>
+  <div class="note" style="margin-top: 12px;"><strong>Tier 3:</strong> Stretch — apply in Week 8-10</div>
+  <div class="company-grid">
+    <div class="company-card"><div class="name">Vercel</div><div class="comp">$140-180K</div><div class="loc">Remote</div></div>
+    <div class="company-card"><div class="name">Canva</div><div class="comp">AUD 150-200K</div><div class="loc">Sydney/Remote</div></div>
+    <div class="company-card"><div class="name">Grab</div><div class="comp">SGD 120-160K</div><div class="loc">Singapore</div></div>
+    <div class="company-card"><div class="name">ByteDance</div><div class="comp">₹70L-1.2Cr</div><div class="loc">Dubai/SG</div></div>
+    <div class="company-card"><div class="name">GitLab</div><div class="comp">$100-150K</div><div class="loc">Remote</div></div>
+    <div class="company-card"><div class="name">PlanetScale</div><div class="comp">$130-170K</div><div class="loc">Remote • Go</div></div>
+    <div class="company-card"><div class="name">Twilio</div><div class="comp">₹50-80L</div><div class="loc">Remote/BLR</div></div>
+    <div class="company-card"><div class="name">Atlassian</div><div class="comp">₹60-90L+RSU</div><div class="loc">Bangalore</div></div>
+    <div class="company-card"><div class="name">Adyen</div><div class="comp">€80-110K</div><div class="loc">Amsterdam</div></div>
+    <div class="company-card"><div class="name">Airbnb</div><div class="comp">₹80L-1.2Cr</div><div class="loc">Bangalore</div></div>
+  </div>
+</div>
+
+<div class="footer-stats">
+  <div class="stat"><div class="stat-num" id="statDSA">0</div><div class="stat-label">DSA Done</div></div>
+  <div class="stat"><div class="stat-num" id="statSD">0</div><div class="stat-label">SD Done</div></div>
+  <div class="stat"><div class="stat-num" id="statMock">0</div><div class="stat-label">Mocks</div></div>
+  <div class="stat"><div class="stat-num" id="statApply">0</div><div class="stat-label">Applied</div></div>
+</div>
+
+<script>
+const STORAGE_KEY = 'gameplan-v1';
+
+function loadState() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; }
+}
+
+function saveState(state) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+function init() {
+  const state = loadState();
+  const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+  checkboxes.forEach(cb => {
+    const id = cb.dataset.id;
+    if (state[id]) { cb.checked = true; cb.closest('.todo').classList.add('done'); }
+    cb.addEventListener('change', function() {
+      const s = loadState();
+      s[this.dataset.id] = this.checked;
+      saveState(s);
+      this.closest('.todo').classList.toggle('done', this.checked);
+      updateProgress();
+      updateStats();
+    });
+  });
+  buildNav();
+  updateProgress();
+  updateStats();
+  showWeek(loadState()._activeWeek || '0');
+}
+
+function buildNav() {
+  const nav = document.getElementById('navTabs');
+  const weeks = [
+    {id:'0', label:'W0'}, {id:'1', label:'W1'}, {id:'2', label:'W2'},
+    {id:'3', label:'W3'}, {id:'4', label:'W4'}, {id:'5', label:'W5'},
+    {id:'6', label:'W6'}, {id:'7', label:'W7'}, {id:'8', label:'W8'},
+    {id:'9', label:'W9'}, {id:'10', label:'W10'}, {id:'11', label:'W11'},
+    {id:'12', label:'W12'}, {id:'companies', label:'🏢'}
+  ];
+  weeks.forEach(w => {
+    const btn = document.createElement('button');
+    btn.className = 'nav-btn';
+    btn.dataset.week = w.id;
+    const section = document.querySelector(`[data-week="${w.id}"]`);
+    const total = section ? section.querySelectorAll('input[type="checkbox"]').length : 0;
+    const done = section ? section.querySelectorAll('input[type="checkbox"]:checked').length : 0;
+    btn.innerHTML = `${w.label}${total ? `<span class="badge">${done}/${total}</span>` : ''}`;
+    btn.onclick = () => showWeek(w.id);
+    nav.appendChild(btn);
+  });
+}
+
+function showWeek(id) {
+  document.querySelectorAll('.week-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  const section = document.querySelector(`[data-week="${id}"]`);
+  const btn = document.querySelector(`.nav-btn[data-week="${id}"]`);
+  if (section) section.classList.add('active');
+  if (btn) btn.classList.add('active');
+  const s = loadState(); s._activeWeek = id; saveState(s);
+}
+
+function updateProgress() {
+  const all = document.querySelectorAll('input[type="checkbox"]').length;
+  const done = document.querySelectorAll('input[type="checkbox"]:checked').length;
+  const pct = all ? Math.round((done / all) * 100) : 0;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent = `${done} / ${all} completed (${pct}%)`;
+  // Update nav badges
+  document.querySelectorAll('.nav-btn').forEach(btn => {
+    const wk = btn.dataset.week;
+    const section = document.querySelector(`[data-week="${wk}"]`);
+    if (!section) return;
+    const total = section.querySelectorAll('input[type="checkbox"]').length;
+    const d = section.querySelectorAll('input[type="checkbox"]:checked').length;
+    const badge = btn.querySelector('.badge');
+    if (badge && total) badge.textContent = `${d}/${total}`;
+  });
+}
+
+function updateStats() {
+  const count = (tag) => document.querySelectorAll(`.${tag}`).length;
+  const doneCount = (tag) => {
+    let c = 0;
+    document.querySelectorAll(`.${tag}`).forEach(el => {
+      if (el.closest('.todo')?.querySelector('input:checked')) c++;
+    });
+    return c;
+  };
+  document.getElementById('statDSA').textContent = doneCount('tag-dsa');
+  document.getElementById('statSD').textContent = doneCount('tag-sd');
+  document.getElementById('statMock').textContent = doneCount('tag-mock');
+  document.getElementById('statApply').textContent = doneCount('tag-apply');
+}
+
+function toggleCat(header) {
+  const body = header.nextElementSibling;
+  const chev = header.querySelector('.chevron');
+  body.classList.toggle('collapsed');
+  chev.classList.toggle('open');
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
