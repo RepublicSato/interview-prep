@@ -104,9 +104,7 @@
   }
 
   /* Week sections */
-  .week-section { display: none; padding: 16px; }
-  .week-section.active { display: block; }
-  .week-section:first-of-type { display: block; }
+  .week-section { padding: 16px; }
   .week-header {
     display: flex;
     align-items: center;
@@ -301,7 +299,7 @@
 <div class="nav" id="navTabs"></div>
 
 <!-- WEEK 0 -->
-<div class="week-section active" data-week="0">
+<div class="week-section" data-week="0" style="display:block">
   <div class="week-header">
     <span class="week-num">W0</span>
     <div><div class="week-title">Launch Week</div><div class="week-phase">Setup & Apply Now</div></div>
@@ -343,7 +341,7 @@
 </div>
 
 <!-- WEEK 1 -->
-<div class="week-section" data-week="1">
+<div class="week-section" data-week="1" style="display:none">
   <div class="week-header">
     <span class="week-num">W1</span>
     <div><div class="week-title">Arrays, Strings, Hashing</div><div class="week-phase">Phase 1: Foundations</div></div>
@@ -391,7 +389,7 @@
 </div>
 
 <!-- WEEK 2 -->
-<div class="week-section" data-week="2">
+<div class="week-section" data-week="2" style="display:none">
   <div class="week-header">
     <span class="week-num">W2</span>
     <div><div class="week-title">Stacks, Queues, Linked Lists</div><div class="week-phase">Phase 1: Foundations</div></div>
@@ -439,7 +437,7 @@
 </div>
 
 <!-- WEEK 3 -->
-<div class="week-section" data-week="3">
+<div class="week-section" data-week="3" style="display:none">
   <div class="week-header">
     <span class="week-num">W3</span>
     <div><div class="week-title">Trees & Graphs</div><div class="week-phase">Phase 1: Foundations</div></div>
@@ -480,7 +478,7 @@
 </div>
 
 <!-- WEEK 4 -->
-<div class="week-section" data-week="4">
+<div class="week-section" data-week="4" style="display:none">
   <div class="week-header">
     <span class="week-num">W4</span>
     <div><div class="week-title">Binary Search, Heap, Greedy</div><div class="week-phase">Phase 1: Foundations</div></div>
@@ -530,7 +528,7 @@
 </div>
 
 <!-- WEEK 5 -->
-<div class="week-section" data-week="5">
+<div class="week-section" data-week="5" style="display:none">
   <div class="week-header">
     <span class="week-num">W5</span>
     <div><div class="week-title">Dynamic Programming (Part 1)</div><div class="week-phase">Phase 2: Depth</div></div>
@@ -571,7 +569,7 @@
 </div>
 
 <!-- WEEK 6 -->
-<div class="week-section" data-week="6">
+<div class="week-section" data-week="6" style="display:none">
   <div class="week-header">
     <span class="week-num">W6</span>
     <div><div class="week-title">DP (Part 2) + Backtracking</div><div class="week-phase">Phase 2: Depth</div></div>
@@ -609,7 +607,7 @@
 </div>
 
 <!-- WEEK 7 -->
-<div class="week-section" data-week="7">
+<div class="week-section" data-week="7" style="display:none">
   <div class="week-header">
     <span class="week-num">W7</span>
     <div><div class="week-title">Advanced Graphs + Tries</div><div class="week-phase">Phase 2: Depth</div></div>
@@ -646,7 +644,7 @@
 </div>
 
 <!-- WEEK 8 -->
-<div class="week-section" data-week="8">
+<div class="week-section" data-week="8" style="display:none">
   <div class="week-header">
     <span class="week-num">W8</span>
     <div><div class="week-title">Low-Level Design + Machine Coding</div><div class="week-phase">Phase 2: Depth</div></div>
@@ -681,7 +679,7 @@
 </div>
 
 <!-- WEEK 9 -->
-<div class="week-section" data-week="9">
+<div class="week-section" data-week="9" style="display:none">
   <div class="week-header">
     <span class="week-num">W9</span>
     <div><div class="week-title">System Design Deep Dives</div><div class="week-phase">Phase 3: Peak</div></div>
@@ -706,7 +704,7 @@
 </div>
 
 <!-- WEEK 10 -->
-<div class="week-section" data-week="10">
+<div class="week-section" data-week="10" style="display:none">
   <div class="week-header">
     <span class="week-num">W10</span>
     <div><div class="week-title">Weak Patterns + Contests</div><div class="week-phase">Phase 3: Peak</div></div>
@@ -730,7 +728,7 @@
 </div>
 
 <!-- WEEK 11 -->
-<div class="week-section" data-week="11">
+<div class="week-section" data-week="11" style="display:none">
   <div class="week-header">
     <span class="week-num">W11</span>
     <div><div class="week-title">Company-Specific Prep</div><div class="week-phase">Phase 3: Peak</div></div>
@@ -748,7 +746,7 @@
 </div>
 
 <!-- WEEK 12 -->
-<div class="week-section" data-week="12">
+<div class="week-section" data-week="12" style="display:none">
   <div class="week-header">
     <span class="week-num">W12</span>
     <div><div class="week-title">Final Polish + Peak</div><div class="week-phase">Phase 3: Peak</div></div>
@@ -768,7 +766,7 @@
 </div>
 
 <!-- Target Companies Tab -->
-<div class="week-section" data-week="companies">
+<div class="week-section" data-week="companies" style="display:none">
   <div class="week-header">
     <span class="week-num" style="background: var(--green);">🏢</span>
     <div><div class="week-title">Target Companies (30)</div><div class="week-phase">₹1Cr+ • Visa Sponsorship • Remote</div></div>
@@ -868,23 +866,23 @@ function buildNav() {
     const btn = document.createElement('button');
     btn.className = 'nav-btn';
     btn.dataset.week = w.id;
-    const section = document.querySelector(`[data-week="${w.id}"]`);
+    const section = document.querySelector('.week-section[data-week="' + w.id + '"]');
     const total = section ? section.querySelectorAll('input[type="checkbox"]').length : 0;
     const done = section ? section.querySelectorAll('input[type="checkbox"]:checked').length : 0;
-    btn.innerHTML = `${w.label}${total ? `<span class="badge">${done}/${total}</span>` : ''}`;
+    btn.innerHTML = w.label + (total ? '<span class="badge">' + done + '/' + total + '</span>' : '');
     btn.onclick = () => showWeek(w.id);
     nav.appendChild(btn);
   });
 }
 
 function showWeek(id) {
-  document.querySelectorAll('.week-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.week-section').forEach(s => s.style.display = 'none');
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  const section = document.querySelector(`[data-week="${id}"]`);
-  const btn = document.querySelector(`.nav-btn[data-week="${id}"]`);
-  if (section) section.classList.add('active');
+  const section = document.querySelector('.week-section[data-week="' + id + '"]');
+  const btn = document.querySelector('.nav-btn[data-week="' + id + '"]');
+  if (section) section.style.display = 'block';
   if (btn) btn.classList.add('active');
-  const s = loadState(); s._activeWeek = id; saveState(s);
+  try { const s = loadState(); s._activeWeek = id; saveState(s); } catch(e) {}
 }
 
 function updateProgress() {
@@ -896,7 +894,7 @@ function updateProgress() {
   // Update nav badges
   document.querySelectorAll('.nav-btn').forEach(btn => {
     const wk = btn.dataset.week;
-    const section = document.querySelector(`[data-week="${wk}"]`);
+    const section = document.querySelector('.week-section[data-week="' + wk + '"]');
     if (!section) return;
     const total = section.querySelectorAll('input[type="checkbox"]').length;
     const d = section.querySelectorAll('input[type="checkbox"]:checked').length;
