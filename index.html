@@ -218,6 +218,60 @@
   .tag-apply { background: #1f3f2f; color: var(--green); }
   .tag-skill { background: #3f1f1f; color: var(--red); }
   .tag-mock { background: #1f3f3f; color: #56d4dd; }
+  .tag-ai { background: #2a1f4f; color: #c084fc; }
+
+  /* AI phase pill */
+  .phase-pill {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+    background: #1a2a3a;
+    color: var(--accent);
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+
+  /* Project card */
+  .project-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 12px;
+  }
+  .project-card .proj-title {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .project-card .proj-stack {
+    font-size: 11px;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .project-card .proj-desc {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 8px;
+    line-height: 1.5;
+  }
+  .proj-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 8px; }
+  .proj-tag {
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 4px;
+    background: #21262d;
+    color: var(--muted);
+    border: 1px solid var(--border);
+  }
+  .proj-why {
+    font-size: 12px;
+    color: var(--green);
+    font-style: italic;
+  }
 
   /* Resources */
   .resource-link {
@@ -812,6 +866,174 @@
   </div>
 </div>
 
+<!-- AI ROADMAP -->
+<div class="week-section" data-week="ai-roadmap" style="display:none">
+  <div class="week-header">
+    <span class="week-num" style="background: #7c3aed;">🤖</span>
+    <div><div class="week-title">Agentic AI Roadmap</div><div class="week-phase">0 → Production Engineer • ~8 weeks</div></div>
+  </div>
+  <div class="note"><strong>Why:</strong> The Anthropic, Arize AI, and Cohere roles in your pipeline explicitly want RAG + agent engineering + LLMOps. This roadmap runs in parallel with DSA prep — 1-2 hrs/day. Build in Python (stretch your toolkit), deploy the projects below.</div>
+
+  <div class="category">
+    <div class="cat-header" onclick="toggleCat(this)"><span class="cat-label"><span class="cat-icon">🟢</span> Phase 0 — Python Foundations <span class="phase-pill">W1</span></span><span class="chevron open">▶</span></div>
+    <div class="cat-body">
+      <div class="todo"><input type="checkbox" data-id="ai0-1"><span class="todo-text">Python data types, loops, list comprehensions, JSON handling <span class="todo-tag tag-ai">AI</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="ai0-2"><span class="todo-text">OOP: classes, dataclasses, inheritance, composition <span class="todo-tag tag-ai">AI</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="ai0-3"><span class="todo-text">Async: async/await, asyncio, httpx <span class="todo-tag tag-ai">AI</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="ai0-4"><span class="todo-text">Build a FastAPI POST endpoint with Pydantic models <span class="todo-tag tag-ai">AI</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="ai0-5"><span class="todo-text">Call an LLM API (OpenAI or Claude) and handle errors <span class="todo-tag tag-ai">AI</span></span></div>
+    </div>
+  </div>
+
+  <div class="category">
+    <div class="cat-header" onclick="toggleCat(this)"><span class="cat-label"><span class="cat-icon">🟡</span> Phase 1 — LLM & Prompt Foundations <span class="phase-pill">W1</span></span><span class="chevron open">▶</span></div>
+    <div class="cat-body">
+      <div class="todo"><input type="checkbox" data-id="ai1-1"><span class="todo-text">Understand tokens, context window, temperature, system vs user prompts <span class="todo-tag tag-ai">AI</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="ai1-2"><span class="todo-text">Few-shot prompting, function calling, structured output parsing <span class="todo-tag tag-ai">AI</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="ai1-3"><span class="todo-text">Build: basic chatbot with streaming response <span class="todo-tag tag-ai">AI</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="ai1-4"><span class="todo-text">Build: structured JSON output generator from unstructured text <span class="todo-tag tag-ai">AI</span></span></div>
+    </div>
+  </div>
+
+  <div class="category">
+    <div class="cat-header" onclick="toggleCat(this)"><span class="cat-label"><span class="cat-icon">🔵</span> Phase 2 — RAG Core <span class="phase-pill">W2</span></span><span class="chevron open">▶</span></div>
+    <div class="cat-body">
+      <div class="todo"><input type="checkbox" data-id="ai2-1"><span class="todo-text">Document loaders: PDF, directory, CSV/JSON, web (BeautifulSoup + Playwright) <span class="todo-tag tag-ai">AI</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="ai2-2"><span class="todo-text">Text splitting: RecursiveCharacterTextSplitter, chunk overlap, token-based <span class="todo-tag tag-ai">AI</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="ai2-3"><span class="todo-text">Embeddings: try HuggingFace (local) + OpenAI; understand cosine similarity <span class="todo-tag tag-ai">AI</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="ai2-4"><span class="todo-text">Vector DB: ChromaDB + FAISS, metadata filtering, hybrid search, top-k retrieval <span class="todo-tag tag-ai">AI</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="ai2-5"><span class="todo-text">Build: Basic RAG (chat with PDF) <span class="todo-tag tag-ai">AI</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="ai2-6"><span class="todo-text">Build: Conversational RAG (with memory) <span class="todo-tag tag-ai">AI</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="ai2-7"><span class="todo-text">Build: Multi-document RAG (folder of docs) <span class="todo-tag tag-ai">AI</span></span></div>
+    </div>
+  </div>
+
+  <div class="category">
+    <div class="cat-header" onclick="toggleCat(this)"><span class="cat-label"><span class="cat-icon">🟣</span> Phase 3 — LangGraph Fundamentals <span class="phase-pill">W3</span></span><span class="chevron open">▶</span></div>
+    <div class="cat-body">
+      <div class="todo"><input type="checkbox" data-id="ai3-1"><span class="todo-text">LangGraph basics: nodes, edges, state, conditional edges, graph execution <span class="todo-tag tag-ai">AI</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="ai3-2"><span class="todo-text">Build: simple state graph + graph with branching + visualization <span class="todo-tag tag-ai">AI</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="ai3-3"><span class="todo-text">LangGraph chatbot: persistent memory, message trimming, session-based conversation <span class="todo-tag tag-ai">AI</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="ai3-4"><span class="todo-text">Tool binding: calculator, web search, database tool <span class="todo-tag tag-ai">AI</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="ai3-5"><span class="todo-text">Build: ReAct agent with multiple tools + memory <span class="todo-tag tag-ai">AI</span></span></div>
+    </div>
+  </div>
+
+  <div class="category">
+    <div class="cat-header" onclick="toggleCat(this)"><span class="cat-label"><span class="cat-icon">🟠</span> Phase 4 — Workflows <span class="phase-pill">W4-5</span></span><span class="chevron open">▶</span></div>
+    <div class="cat-body">
+      <div class="todo"><input type="checkbox" data-id="ai4-1"><span class="todo-text">Prompt chaining: sequential steps, output-to-input pipelines <span class="todo-tag tag-ai">AI</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="ai4-2"><span class="todo-text">Routers: classifier → conditional branching to different chains <span class="todo-tag tag-ai">AI</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="ai4-3"><span class="todo-text">Parallelization: fan-out / fan-in, combine results, latency optimization <span class="todo-tag tag-ai">AI</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="ai4-4"><span class="todo-text">Build: document analyzer workflow <span class="todo-tag tag-ai">AI</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="ai4-5"><span class="todo-text">Build: multi-step research agent (planner + executor) <span class="todo-tag tag-ai">AI</span></span></div>
+    </div>
+  </div>
+
+  <div class="category">
+    <div class="cat-header" onclick="toggleCat(this)"><span class="cat-label"><span class="cat-icon">🔴</span> Phase 5 — Orchestrators + Eval + HITL <span class="phase-pill">W6-7</span></span><span class="chevron open">▶</span></div>
+    <div class="cat-body">
+      <div class="todo"><input type="checkbox" data-id="ai5-1"><span class="todo-text">Multi-agent: orchestrator → worker pattern, task decomposition, delegation <span class="todo-tag tag-ai">AI</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="ai5-2"><span class="todo-text">Build: blog generator agent (planner + writer + editor workers) <span class="todo-tag tag-ai">AI</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="ai5-3"><span class="todo-text">Evaluator: LLM-as-judge, binary/confidence scoring, self-reflection loop <span class="todo-tag tag-ai">AI</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="ai5-4"><span class="todo-text">Build: auto-eval pipeline with retry on low score <span class="todo-tag tag-ai">AI</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="ai5-5"><span class="todo-text">HITL: manual approval nodes, interrupt-and-resume, state checkpointing <span class="todo-tag tag-ai">AI</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="ai5-6"><span class="todo-text">Advanced RAG: Adaptive RAG, Corrective RAG, Agentic RAG (multi-source: PDF + Web + DB) <span class="todo-tag tag-ai">AI</span></span></div>
+    </div>
+  </div>
+
+  <div class="category">
+    <div class="cat-header" onclick="toggleCat(this)"><span class="cat-label"><span class="cat-icon">⚫</span> Phase 6 — Production Agent Engineering <span class="phase-pill">W8+</span></span><span class="chevron open">▶</span></div>
+    <div class="cat-body">
+      <div class="todo"><input type="checkbox" data-id="ai6-1"><span class="todo-text">Debugging & observability: LangGraph visualization, tracing, token tracking <span class="todo-tag tag-ai">AI</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="ai6-2"><span class="todo-text">Rate limiting, caching embeddings in Redis, cost optimization <span class="todo-tag tag-ai">AI</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="ai6-3"><span class="todo-text">Retry strategies, exponential backoff, guardrails, output validation <span class="todo-tag tag-ai">AI</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="ai6-4"><span class="todo-text">Prompt injection protection, hallucination detection <span class="todo-tag tag-ai">AI</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="ai6-5"><span class="todo-text">Build: production-ready RAG API with monitoring <span class="todo-tag tag-ai">AI</span></span></div>
+      <div class="todo"><input type="checkbox" data-id="ai6-6"><span class="todo-text">Architecture: agent memory persistence, Redis session state, distributed vector DB, horizontal scaling <span class="todo-tag tag-ai">AI</span></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- AI PROJECTS -->
+<div class="week-section" data-week="ai-projects" style="display:none">
+  <div class="week-header">
+    <span class="week-num" style="background: #c084fc; color: #0d1117;">🚀</span>
+    <div><div class="week-title">5 AI Projects</div><div class="week-phase">Portfolio proof points for Anthropic, Arize, Cohere</div></div>
+  </div>
+  <div class="note"><strong>Strategy:</strong> Each project should be a public GitHub repo with a README that leads with the metric (latency, cost saved, accuracy). These are proof points, not tutorials. Cite them in interviews and PDFs.</div>
+
+  <div class="project-card">
+    <div class="proj-title">1. Production RAG API with pgvector (Go + Python)</div>
+    <div class="proj-stack">Go gRPC server · FastAPI ingestion · Postgres + pgvector · Redis cache</div>
+    <div class="proj-desc">Dual-language system: Python ingestion pipeline (LangChain loaders, chunking, embeddings) feeding into a Go gRPC query service backed by Postgres pgvector. Implements embedding caching in Redis to cut repeat-query latency by 80%+. Exposes REST and gRPC interfaces. Add an eval suite with LLM-as-judge scoring.</div>
+    <div class="proj-tags">
+      <span class="proj-tag">RAG</span><span class="proj-tag">pgvector</span><span class="proj-tag">Go</span><span class="proj-tag">gRPC</span><span class="proj-tag">Redis</span><span class="proj-tag">LangChain</span>
+    </div>
+    <div class="proj-why">Why: Supabase, Cloudflare, Anthropic all want Go + vector DB. Directly maps to your AI cost optimization background. Lead metric: query p95 latency.</div>
+    <div class="todo" style="padding-top:8px; border-top: 1px solid var(--border); margin-top: 8px;"><input type="checkbox" data-id="proj1-1"><span class="todo-text">Build ingestion pipeline (Phase 2) <span class="todo-tag tag-ai">AI</span></span></div>
+    <div class="todo"><input type="checkbox" data-id="proj1-2"><span class="todo-text">Build Go gRPC query service with pgvector <span class="todo-tag tag-skill">SKILL</span></span></div>
+    <div class="todo"><input type="checkbox" data-id="proj1-3"><span class="todo-text">Add Redis embedding cache + benchmark latency <span class="todo-tag tag-skill">SKILL</span></span></div>
+    <div class="todo"><input type="checkbox" data-id="proj1-4"><span class="todo-text">Add LLM-as-judge eval suite, publish README with metrics <span class="todo-tag tag-apply">APPLY</span></span></div>
+  </div>
+
+  <div class="project-card">
+    <div class="proj-title">2. LangGraph Code Review Agent with HITL</div>
+    <div class="proj-stack">LangGraph · Claude API · GitHub REST API · FastAPI webhook</div>
+    <div class="proj-desc">Multi-agent system that ingests a GitHub PR diff, routes it to specialist sub-agents (security review, performance review, style review) in parallel, aggregates findings, then pauses for a human approval node before posting the review comment. Demonstrates orchestrator → worker pattern, parallelization, HITL, and conditional edges.</div>
+    <div class="proj-tags">
+      <span class="proj-tag">LangGraph</span><span class="proj-tag">HITL</span><span class="proj-tag">Multi-agent</span><span class="proj-tag">GitHub API</span><span class="proj-tag">Parallelization</span>
+    </div>
+    <div class="proj-why">Why: Anthropic (Model Quality, Claude Code), Arize AI, and every AI platform role asks about HITL and multi-agent coordination. GitHub webhook = production-grade. Headline: "reviews PRs in &lt;15s with 3 specialist agents".</div>
+    <div class="todo" style="padding-top:8px; border-top: 1px solid var(--border); margin-top: 8px;"><input type="checkbox" data-id="proj2-1"><span class="todo-text">Build 3 specialist review agents (parallel fan-out) <span class="todo-tag tag-ai">AI</span></span></div>
+    <div class="todo"><input type="checkbox" data-id="proj2-2"><span class="todo-text">Add HITL approval node + GitHub PR comment posting <span class="todo-tag tag-ai">AI</span></span></div>
+    <div class="todo"><input type="checkbox" data-id="proj2-3"><span class="todo-text">Expose as FastAPI webhook, add LangSmith tracing <span class="todo-tag tag-skill">SKILL</span></span></div>
+    <div class="todo"><input type="checkbox" data-id="proj2-4"><span class="todo-text">Benchmark latency + accuracy vs GPT-4 single-pass baseline <span class="todo-tag tag-apply">APPLY</span></span></div>
+  </div>
+
+  <div class="project-card">
+    <div class="proj-title">3. Self-Correcting SQL Optimizer Agent</div>
+    <div class="proj-stack">LangGraph · Postgres EXPLAIN ANALYZE · Claude API · Go CLI</div>
+    <div class="proj-desc">Agent that takes a slow SQL query, runs EXPLAIN ANALYZE, feeds the plan to an LLM for diagnosis, generates index/rewrite suggestions, auto-applies them in a sandbox, re-runs EXPLAIN to verify improvement, and retries if the score doesn't meet threshold. Directly extends your 9,650x SQL speedup proof point into a reusable tool.</div>
+    <div class="proj-tags">
+      <span class="proj-tag">LangGraph</span><span class="proj-tag">Postgres</span><span class="proj-tag">Corrective RAG pattern</span><span class="proj-tag">Self-reflection loop</span><span class="proj-tag">Go CLI</span>
+    </div>
+    <div class="proj-why">Why: Extends your biggest existing proof point into a product. Anthropic (Databases SWE), Supabase, and any Postgres-heavy company will immediately connect this to their pain. Lead metric: median query speedup in benchmark suite.</div>
+    <div class="todo" style="padding-top:8px; border-top: 1px solid var(--border); margin-top: 8px;"><input type="checkbox" data-id="proj3-1"><span class="todo-text">Build query profiling node (EXPLAIN ANALYZE → structured JSON) <span class="todo-tag tag-ai">AI</span></span></div>
+    <div class="todo"><input type="checkbox" data-id="proj3-2"><span class="todo-text">Add LLM diagnosis + index suggestion generation <span class="todo-tag tag-ai">AI</span></span></div>
+    <div class="todo"><input type="checkbox" data-id="proj3-3"><span class="todo-text">Add self-correction loop: apply → verify → retry if below threshold <span class="todo-tag tag-ai">AI</span></span></div>
+    <div class="todo"><input type="checkbox" data-id="proj3-4"><span class="todo-text">Wrap in Go CLI, write benchmark suite, publish results <span class="todo-tag tag-apply">APPLY</span></span></div>
+  </div>
+
+  <div class="project-card">
+    <div class="proj-title">4. Agentic Job Evaluator API (Open-Source Career-Ops Core)</div>
+    <div class="proj-stack">FastAPI · LangGraph · Claude API · Pydantic · Docker</div>
+    <div class="proj-desc">Extract the evaluation engine from career-ops into a standalone, open-source REST API. Input: JD text + CV markdown. Output: structured A-F scoring JSON with archetype detection, skill gap analysis, red flags, and legitimacy tier. Add a streaming endpoint for live evaluation progress. Demonstrates production agent engineering with structured output, retry on parse failure, and token cost tracking.</div>
+    <div class="proj-tags">
+      <span class="proj-tag">FastAPI</span><span class="proj-tag">LangGraph</span><span class="proj-tag">Structured output</span><span class="proj-tag">Token tracking</span><span class="proj-tag">Docker</span>
+    </div>
+    <div class="proj-why">Why: You already have the prompt engineering done in career-ops. This is a port + productionization. Shows AI Platform / LLMOps archetype. Headline: "evaluated 70+ real job offers, &lt;3s p95 response". Directly relevant to Anthropic Applied AI Engineer roles.</div>
+    <div class="todo" style="padding-top:8px; border-top: 1px solid var(--border); margin-top: 8px;"><input type="checkbox" data-id="proj4-1"><span class="todo-text">Port evaluation logic to LangGraph pipeline with structured Pydantic output <span class="todo-tag tag-ai">AI</span></span></div>
+    <div class="todo"><input type="checkbox" data-id="proj4-2"><span class="todo-text">Add streaming endpoint + token cost tracking per request <span class="todo-tag tag-skill">SKILL</span></span></div>
+    <div class="todo"><input type="checkbox" data-id="proj4-3"><span class="todo-text">Dockerize, add OpenAPI docs, deploy to Fly.io or Railway <span class="todo-tag tag-apply">APPLY</span></span></div>
+    <div class="todo"><input type="checkbox" data-id="proj4-4"><span class="todo-text">Write case study README: methodology, accuracy vs human scoring, cost per eval <span class="todo-tag tag-apply">APPLY</span></span></div>
+  </div>
+
+  <div class="project-card">
+    <div class="proj-title">5. Distributed LLM Observability Dashboard (Go + OpenTelemetry)</div>
+    <div class="proj-stack">Go · OpenTelemetry · Prometheus · Grafana · Kafka</div>
+    <div class="proj-desc">A Go service that intercepts LLM API calls (OpenAI, Anthropic SDK), emits OpenTelemetry traces/spans with token counts, latency, model, cost, and error rates. Streams events to Kafka for async processing, aggregates into Prometheus metrics, visualizes in Grafana. Implements per-user rate limiting and cost budgets. Shows you understand AI Platform / LLMOps at the infrastructure level.</div>
+    <div class="proj-tags">
+      <span class="proj-tag">Go</span><span class="proj-tag">OpenTelemetry</span><span class="proj-tag">Kafka</span><span class="proj-tag">Prometheus</span><span class="proj-tag">Grafana</span><span class="proj-tag">LLMOps</span>
+    </div>
+    <div class="proj-why">Why: Directly maps to Arize AI (observability), Datadog (monitoring), Grafana Labs (Go + observability), and Anthropic (AI Reliability Engineering). Your existing Kafka knowledge from W2 prep slots straight in. Headline: "tracks $0.00X per request, sub-ms overhead".</div>
+    <div class="todo" style="padding-top:8px; border-top: 1px solid var(--border); margin-top: 8px;"><input type="checkbox" data-id="proj5-1"><span class="todo-text">Build Go SDK wrapper that emits OTel spans for each LLM call <span class="todo-tag tag-skill">SKILL</span></span></div>
+    <div class="todo"><input type="checkbox" data-id="proj5-2"><span class="todo-text">Stream events to Kafka, build consumer that writes to Prometheus <span class="todo-tag tag-skill">SKILL</span></span></div>
+    <div class="todo"><input type="checkbox" data-id="proj5-3"><span class="todo-text">Build Grafana dashboard: latency heatmap, cost-per-user, error rate <span class="todo-tag tag-ai">AI</span></span></div>
+    <div class="todo"><input type="checkbox" data-id="proj5-4"><span class="todo-text">Add per-user rate limiting + cost budget enforcement, load test <span class="todo-tag tag-apply">APPLY</span></span></div>
+  </div>
+</div>
+
 <div class="footer-stats">
   <div class="stat"><div class="stat-num" id="statDSA">0</div><div class="stat-label">DSA Done</div></div>
   <div class="stat"><div class="stat-num" id="statSD">0</div><div class="stat-label">SD Done</div></div>
@@ -860,7 +1082,7 @@ function buildNav() {
     {id:'3', label:'W3'}, {id:'4', label:'W4'}, {id:'5', label:'W5'},
     {id:'6', label:'W6'}, {id:'7', label:'W7'}, {id:'8', label:'W8'},
     {id:'9', label:'W9'}, {id:'10', label:'W10'}, {id:'11', label:'W11'},
-    {id:'12', label:'W12'}, {id:'companies', label:'🏢'}
+    {id:'12', label:'W12'}, {id:'companies', label:'🏢'}, {id:'ai-roadmap', label:'🤖 AI'}, {id:'ai-projects', label:'🚀 Projects'}
   ];
   weeks.forEach(w => {
     const btn = document.createElement('button');
